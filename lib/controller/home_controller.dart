@@ -50,7 +50,8 @@ class HomeState extends State<HomeController> {
           padding: const EdgeInsets.only(top: 50, left: 30),
           child: Text(
             currentIndex == 0 ? 'Accueil' : '',
-            style: TextStyle(color: Colors.black, fontSize: 30),
+            style: const TextStyle(
+                color: Color.fromRGBO(253, 126, 20, 0.839), fontSize: 30),
           ),
         ),
         toolbarHeight: 80,
@@ -60,7 +61,7 @@ class HomeState extends State<HomeController> {
             padding: const EdgeInsets.all(20.0),
             child: IconButton(
               onPressed: () => usersetting(widget.user),
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings_outlined,
                 color: Colors.black,
                 size: 30,
@@ -87,15 +88,18 @@ class HomeState extends State<HomeController> {
       bottomNavigationBar: BottomAppBar(
         height: 60,
         elevation: 20,
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.people_outline_sharp,
                 size: 30,
               ),
+              color: currentIndex == 0
+                  ? const Color.fromRGBO(253, 126, 20, 0.839)
+                  : Colors.grey,
               onPressed: () {
                 setState(() {
                   currentIndex = 0;
@@ -103,10 +107,13 @@ class HomeState extends State<HomeController> {
               },
             ),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.person_2_outlined,
                 size: 30,
               ),
+              color: currentIndex == 1
+                  ? const Color.fromRGBO(253, 126, 20, 0.839)
+                  : Colors.grey,
               onPressed: () {
                 setState(() {
                   currentIndex = 1;
@@ -118,9 +125,10 @@ class HomeState extends State<HomeController> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromRGBO(255, 146, 43, 0.943),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         elevation: 5,
-        child: SizedBox(
+        child: const SizedBox(
           child: Icon(
             Icons.search_outlined,
             size: 40,
@@ -128,6 +136,12 @@ class HomeState extends State<HomeController> {
         ),
         onPressed: () {
           showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
             context: context,
             builder: (BuildContext context) {
               return ClipRRect(
@@ -143,7 +157,7 @@ class HomeState extends State<HomeController> {
                                 value; // Mettre à jour la valeur de recherche
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Nom d\'utilisateur',
                           prefixIcon: Icon(Icons.search),
                         ),
@@ -170,7 +184,7 @@ class HomeState extends State<HomeController> {
                               },
                             );
                           } else {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }

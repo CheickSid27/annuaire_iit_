@@ -81,14 +81,14 @@ class ProfileState extends State<ProfileView> {
                             children: [
                               Icon(
                                 Icons.mail_outline_outlined,
-                                color: Colors.redAccent,
+                                color: Color.fromRGBO(253, 126, 20, 0.839),
                               ),
                               SizedBox(
                                 width: 20,
                               ),
                               Icon(
                                 Icons.phone_outlined,
-                                color: Colors.redAccent,
+                                color: Color.fromRGBO(253, 126, 20, 0.839),
                               ),
                             ],
                           ),
@@ -137,14 +137,14 @@ class ProfileState extends State<ProfileView> {
                             children: [
                               Icon(
                                 Icons.school_outlined,
-                                color: Colors.redAccent,
+                                color: Color.fromRGBO(253, 126, 20, 0.839),
                               ),
                               SizedBox(
                                 width: 20,
                               ),
                               Icon(
                                 Icons.history_edu_outlined,
-                                color: Colors.redAccent,
+                                color: Color.fromRGBO(253, 126, 20, 0.839),
                               ),
                             ],
                           ),
@@ -160,6 +160,18 @@ class ProfileState extends State<ProfileView> {
                                   ),
                                 ),
                               ),
+                              if (widget.user["annee"] != null &&
+                                  widget.user["annee"].toString().isNotEmpty)
+                                Text(
+                                  widget.user["annee"] as String,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              if (widget.user["annee"] == null ||
+                                  widget.user["annee"].toString().isEmpty)
+                                Container(height: 0),
                               SizedBox(
                                 width: 1,
                                 height: 30,
@@ -173,7 +185,7 @@ class ProfileState extends State<ProfileView> {
                                       widget.user["module"] ??
                                       widget.user["poste"],
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 19,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -217,9 +229,12 @@ class ProfileState extends State<ProfileView> {
                         width: 170,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: (url == null)
-                              ? Image.asset("assets/UserNoProfilPic.png")
-                              : Image.network(url!, fit: BoxFit.cover),
+                          child: Container(
+                            color: Colors.deepOrangeAccent,
+                            child: (url == null)
+                                ? Image.asset("assets/UserNoProfilPic.png")
+                                : Image.network(url!, fit: BoxFit.cover),
+                          ),
                         ),
                       ),
                     ),

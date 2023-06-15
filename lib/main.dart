@@ -22,23 +22,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const primaryColor = Color.fromARGB(255, 240, 3, 3);
+  static const primaryColor = Color.fromRGBO(220, 53, 70, 0.911);
   static const secondaryColor = Color.fromARGB(255, 240, 2, 2);
   static const tertiaryColor = Color.fromARGB(214, 253, 41, 41);
 
   static final MaterialColor materialColor = MaterialColor(0xFFFD297D, swatch);
 
   static final Map<int, Color> swatch = {
-    50: Color.fromARGB(24, 253, 41, 41),
-    100: Color.fromARGB(51, 226, 152, 152),
-    200: Color.fromARGB(75, 253, 41, 41),
-    300: Color.fromARGB(102, 253, 41, 41),
-    400: Color.fromARGB(126, 253, 41, 41),
-    500: Color.fromARGB(153, 253, 41, 41),
-    600: Color.fromARGB(177, 253, 41, 41),
-    700: Color.fromARGB(204, 253, 41, 41),
-    800: Color.fromARGB(228, 253, 41, 41),
-    900: Color.fromARGB(255, 253, 41, 41),
+    50: const Color.fromARGB(24, 253, 41, 41),
+    100: const Color.fromARGB(51, 226, 152, 152),
+    200: const Color.fromARGB(75, 253, 41, 41),
+    300: const Color.fromARGB(102, 253, 41, 41),
+    400: const Color.fromARGB(126, 253, 41, 41),
+    500: const Color.fromARGB(153, 253, 41, 41),
+    600: const Color.fromARGB(177, 253, 41, 41),
+    700: const Color.fromARGB(204, 253, 41, 41),
+    800: const Color.fromARGB(228, 253, 41, 41),
+    900: const Color.fromARGB(255, 253, 41, 41),
   };
 
   @override
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
                             user: snapshot.data!,
                             users: snapshot.data!,
                           )
-                        : AuthController();
+                        : const AuthController();
                 }
               },
             ),
@@ -109,7 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text('Splash Screen'),
       ),

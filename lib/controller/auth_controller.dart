@@ -1,11 +1,11 @@
 import 'package:annuaire_iit_/model/login_response.dart';
 import 'package:annuaire_iit_/model/parse_handler.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class AuthController extends StatefulWidget {
+  const AuthController({super.key});
+
   @override
   AuthState createState() => AuthState();
 }
@@ -22,6 +22,7 @@ class AuthState extends State<AuthController> {
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
     ),
   };
+  bool isLoading = false;
 
   String? selectedRole = 'Étudiant';
   String? selectedFilliere = 'Informatique et Génie Logiciel';
@@ -103,7 +104,7 @@ class AuthState extends State<AuthController> {
                               });
                             },
                             backgroundColor: Colors.grey.shade300,
-                            thumbColor: Theme.of(context).colorScheme.secondary,
+                            thumbColor: Color.fromRGBO(253, 126, 20, 0.999),
                             groupValue: authType,
                           ),
                           SizedBox(
@@ -162,7 +163,7 @@ class AuthState extends State<AuthController> {
                                       width: 27,
                                     ),
                                     Text(
-                                      'Année de licence:',
+                                      'Année de cursus: (Uniquement pour les étudiants)',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -187,6 +188,7 @@ class AuthState extends State<AuthController> {
                                           label: Text('License 1'),
                                           selected:
                                               selectedAnnee == 'License 1',
+                                          selectedColor: Colors.blue,
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -199,6 +201,7 @@ class AuthState extends State<AuthController> {
                                           label: Text('License 2'),
                                           selected:
                                               selectedAnnee == 'License 2',
+                                          selectedColor: Colors.blue,
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -211,6 +214,7 @@ class AuthState extends State<AuthController> {
                                           label: Text('License 3'),
                                           selected:
                                               selectedAnnee == 'License 3',
+                                          selectedColor: Colors.blue,
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -222,6 +226,7 @@ class AuthState extends State<AuthController> {
                                         ChoiceChip(
                                           label: Text('Master 1'),
                                           selected: selectedAnnee == 'Master 1',
+                                          selectedColor: Colors.blue,
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -233,6 +238,7 @@ class AuthState extends State<AuthController> {
                                         ChoiceChip(
                                           label: Text('Master 2'),
                                           selected: selectedAnnee == 'Master 2',
+                                          selectedColor: Colors.blue,
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -357,11 +363,20 @@ class AuthState extends State<AuthController> {
                             ),
                           ),
                           ElevatedButton(
-                            style: ButtonStyle(),
-                            onPressed: handleAuth,
-                            child: (authType == 1)
-                                ? Text("INSCRIPTION")
-                                : Text("CONNEXION"),
+                            style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(253, 126, 20, 0.839),
+                            ),
+                            onPressed: isLoading
+                                ? null
+                                : handleAuth, // Désactiver le bouton pendant le chargement
+                            child: isLoading
+                                ? CircularProgressIndicator(
+                                    color: Color.fromRGBO(253, 126, 20, 0.839),
+                                    strokeWidth: 1,
+                                  ) // Afficher l'indicateur de progression circulaire
+                                : (authType == 1)
+                                    ? Text("INSCRIPTION")
+                                    : Text("CONNEXION"),
                           ),
                         ],
                       ),
@@ -399,6 +414,9 @@ class AuthState extends State<AuthController> {
   }
 
   handleAuth() async {
+    setState(() {
+      isLoading = true; // Activer l'indicateur de chargement
+    });
     FocusScope.of(context).requestFocus(FocusNode());
     final username = usernameController.text;
     final emailAddress = mailController.text.trim();
@@ -424,6 +442,12 @@ class AuthState extends State<AuthController> {
       );
       handleAuthResponse(loginResponse);
     }
+
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      isLoading = false; // Désactiver l'indicateur de chargement
+    });
   }
 
   handleAuthResponse(LoginResponse loginResponse) {
