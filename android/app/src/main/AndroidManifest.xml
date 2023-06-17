@@ -3,7 +3,7 @@
    <application
         android:label="annuaire_iit_"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logoapp"
         android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"

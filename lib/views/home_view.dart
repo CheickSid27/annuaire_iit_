@@ -187,7 +187,7 @@ class MatchState extends State<home_view> {
                                                 builder:
                                                     (BuildContext context) {
                                                   return Dismissible(
-                                                    key: const Key('dialogKey'),
+                                                    key: Key('dialogKey'),
                                                     direction:
                                                         DismissDirection.down,
                                                     onDismissed: (direction) {

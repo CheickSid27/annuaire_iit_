@@ -77,6 +77,14 @@ class ParseHandler {
         (Route<dynamic> route) => false);
   }
 
+  // Réinitialisation du mot de passe
+Future<LoginResponse> resetPassword(String emailAddress) async {
+  ParseUser user = ParseUser(emailAddress, null, null);
+  final ParseResponse response = await user.requestPasswordReset();
+  return responseLog(response);
+}
+
+
   //Update User
   Future<bool> updateUser(
       {required ParseUser user,

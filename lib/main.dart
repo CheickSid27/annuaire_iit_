@@ -86,32 +86,58 @@ class MyApp extends StatelessWidget {
 }
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+
+  late AnimationController controller;
+
   @override
   void initState() {
     super.initState();
-    _initializeApp(); // Ajoutez ici tout code d'initialisation ou de traitement que vous souhaitez effectuer pendant l'écran de démarrage
+    controller = AnimationController(
+      duration: const Duration(seconds: 4),
+      vsync: this,
+    );
+    final CurvedAnimation curve =
+        CurvedAnimation(parent: controller, curve: Curves.ease);
+    animation = Tween(begin: 1.0, end: 0.2).animate(curve);
+
+    animation.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });
+
+    controller.forward().whenComplete(() {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    });
   }
 
-  Future<void> _initializeApp() async {
-    // Ajoutez ici le code d'initialisation ou de traitement que vous souhaitez effectuer
-
-    // Exemple : Attendre quelques secondes, puis passer à l'écran suivant
-    await Future.delayed(const Duration(seconds: 3));
-
-    // Naviguer vers l'écran suivant, par exemple votre écran d'accueil
-    Navigator.pushReplacementNamed(context, '/home');
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Splash Screen'),
+        child: ScaleTransition(
+          scale: animation,
+          child: Image.asset('assets/logoapp.png'),
+        ),
       ),
     );
   }

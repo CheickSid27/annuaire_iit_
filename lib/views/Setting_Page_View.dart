@@ -14,6 +14,21 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
+  late TextEditingController mailController;
+
+  @override
+  void initState() {
+    mailController = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    mailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +48,50 @@ class _SettingViewState extends State<SettingView> {
                   ],
                 )),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0),
+                        ),
+                      ),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ClipRRect(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextField(
+                                controller: mailController,
+                                keyboardType: TextInputType.emailAddress,
+                                textCapitalization: TextCapitalization.none,
+                                autocorrect: false,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black)),
+                                    labelText: 'E-mail'),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Container(
+                                height: 50,
+                                child: ElevatedButton(
+                                  child: const Text('Reinitialisé MDP'),
+                                  onPressed: () => doUserResetPassword(),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      });
+                },
                 child: Row(
                   children: const [
                     Icon(Icons.edit_sharp),
-                    Text('Mettre à jour votre profil'),
+                    Text('Reinitialisé mon mot de passe'),
                   ],
                 )),
             ElevatedButton(
@@ -85,5 +139,49 @@ class _SettingViewState extends State<SettingView> {
                 user: user,
               )),
     );
+  }
+
+  void doUserResetPassword() async {
+    final ParseUser user = ParseUser(null, null, mailController.text.trim());
+    final ParseResponse parseResponse = await user.requestPasswordReset();
+    if (parseResponse.success) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Réinitialisation du mot de passe'),
+            content: Text(
+                'Les instructions de réinitialisation du mot de passe ont été envoyées par e-mail !'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Erreur de réinitialisation du mot de passe'),
+            content: Text(parseResponse.error!.message),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
