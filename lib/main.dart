@@ -1,8 +1,8 @@
-import 'package:annuaire_iit_/controller/auth_controller.dart';
-import 'package:annuaire_iit_/controller/home_controller.dart';
-import 'package:annuaire_iit_/model/connection_widget.dart';
-import 'package:annuaire_iit_/model/keys.dart';
-import 'package:annuaire_iit_/model/parse_handler.dart';
+import 'package:Udirectory/controller/auth_controller.dart';
+import 'package:Udirectory/controller/home_controller.dart';
+import 'package:Udirectory/model/connection_widget.dart';
+import 'package:Udirectory/model/keys.dart';
+import 'package:Udirectory/model/parse_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -107,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
     final CurvedAnimation curve =
         CurvedAnimation(parent: controller, curve: Curves.ease);
-    animation = Tween(begin: 1.0, end: 0.2).animate(curve);
+    animation = Tween(begin: 1.0, end: 0.60).animate(curve);
 
     animation.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) {
@@ -133,10 +133,11 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(179, 44, 44, 1),
       body: Center(
         child: ScaleTransition(
           scale: animation,
-          child: Image.asset('assets/logoapp.png'),
+          child: Image.asset('assets/UdirectoryFrais.png'),
         ),
       ),
     );

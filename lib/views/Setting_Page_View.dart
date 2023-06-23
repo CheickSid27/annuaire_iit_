@@ -1,6 +1,6 @@
 // ignore: file_names
-import 'package:annuaire_iit_/model/parse_handler.dart';
-import 'package:annuaire_iit_/views/Profile_Edit_view.dart';
+import 'package:Udirectory/model/parse_handler.dart';
+import 'package:Udirectory/views/Profile_Edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 

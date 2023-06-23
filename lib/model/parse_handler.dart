@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:annuaire_iit_/main.dart';
-import 'package:annuaire_iit_/model/login_response.dart';
+import 'package:Udirectory/main.dart';
+import 'package:Udirectory/model/login_response.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 

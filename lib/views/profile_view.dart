@@ -1,5 +1,5 @@
-import 'package:annuaire_iit_/model/parse_handler.dart';
-import 'package:annuaire_iit_/views/Setting_Page_View.dart';
+import 'package:Udirectory/model/parse_handler.dart';
+import 'package:Udirectory/views/Setting_Page_View.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
@@ -13,16 +13,25 @@ class ProfileView extends StatefulWidget {
 }
 
 class ProfileState extends State<ProfileView> {
+  late RefreshIndicatorState refreshIndicatorState;
+  bool isLoading = false;
   String? url;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showIndicator();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void showIndicator() {
+    refreshIndicatorState.show();
   }
 
   @override
@@ -52,154 +61,233 @@ class ProfileState extends State<ProfileView> {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 160),
+                  padding: const EdgeInsets.only(top: 100),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.55,
+                    height: MediaQuery.of(context).size.height * 0.65,
                     width: MediaQuery.of(context).size.width * 80,
                     decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25)),
+                      borderRadius: BorderRadius.all(Radius.circular(40)),
                       color: Colors.white,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 80,
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            widget.user.username ?? '',
-                            style: const TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(
-                                Icons.mail_outline_outlined,
-                                color: Color.fromRGBO(253, 126, 20, 0.839),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Icon(
-                                Icons.phone_outlined,
-                                color: Color.fromRGBO(253, 126, 20, 0.839),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  widget.user.emailAddress ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                    child: RefreshIndicator(
+                      key: Key('refreshIndicator'),
+                      onRefresh: () async {
+                        setState(() {
+                          isLoading =
+                              true; // Afficher l'animation de chargement
+                        });
+
+                        // Mettez ici votre logique de rafraîchissement des données
+                        // Par exemple, vous pouvez appeler la fonction getImageForUser de la classe ParseHandler
+
+                        try {
+                          url =
+                              await ParseHandler().getImageForUser(widget.user);
+                        } catch (e) {
+                          // Gérer les erreurs de récupération de l'image depuis la source externe
+                          print(
+                              "Erreur lors du rafraîchissement de l'image : $e");
+                        }
+
+                        // Simulez une attente de quelques secondes pour l'exemple
+                        await Future.delayed(Duration(seconds: 2));
+
+                        // Après avoir terminé le rafraîchissement des données, masquez l'animation de chargement
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 80,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20, top: 10),
+                          child: SingleChildScrollView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20),
+                                  child: Text(
+                                    widget.user.username ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 1,
-                                height: 30,
-                                child: Container(
-                                  color: Colors.black,
+                                const SizedBox(
+                                  height: 30,
                                 ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  widget.user["numero"],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        widget.user.emailAddress ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.mail_outline_outlined,
+                                      color:
+                                          Color.fromRGBO(253, 126, 20, 0.839),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(22.0),
+                                  child: SizedBox(
+                                    width: 100,
+                                    height: 1,
+                                    child: Container(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(22.0),
-                            child: SizedBox(
-                              width: 100,
-                              height: 1,
-                              child: Container(
-                                color: Colors.black,
-                              ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        widget.user["numero"],
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.phone_outlined,
+                                      color:
+                                          Color.fromRGBO(253, 126, 20, 0.839),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(22.0),
+                                  child: SizedBox(
+                                    width: 100,
+                                    height: 1,
+                                    child: Container(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        widget.user['role'] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    if (widget.user["annee"] != null &&
+                                        widget.user["annee"]
+                                            .toString()
+                                            .isNotEmpty)
+                                      Text(
+                                        widget.user["annee"] as String,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    if (widget.user["annee"] == null ||
+                                        widget.user["annee"].toString().isEmpty)
+                                      Container(height: 0),
+                                    Icon(
+                                      Icons.school_outlined,
+                                      color:
+                                          Color.fromRGBO(253, 126, 20, 0.839),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(22.0),
+                                  child: SizedBox(
+                                    width: 100,
+                                    height: 1,
+                                    child: Container(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        widget.user["filiere"] ??
+                                            widget.user["module"] ??
+                                            widget.user["poste"],
+                                        style: const TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.history_edu_outlined,
+                                      color:
+                                          Color.fromRGBO(253, 126, 20, 0.839),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(22.0),
+                                  child: SizedBox(
+                                    width: 100,
+                                    height: 1,
+                                    child: Container(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        widget.user["description"] ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.edit_note_outlined,
+                                      color:
+                                          Color.fromRGBO(253, 126, 20, 0.839),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(
-                                Icons.school_outlined,
-                                color: Color.fromRGBO(253, 126, 20, 0.839),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Icon(
-                                Icons.history_edu_outlined,
-                                color: Color.fromRGBO(253, 126, 20, 0.839),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  widget.user['role'] ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              if (widget.user["annee"] != null &&
-                                  widget.user["annee"].toString().isNotEmpty)
-                                Text(
-                                  widget.user["annee"] as String,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              if (widget.user["annee"] == null ||
-                                  widget.user["annee"].toString().isEmpty)
-                                Container(height: 0),
-                              SizedBox(
-                                width: 1,
-                                height: 30,
-                                child: Container(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  widget.user["filiere"] ??
-                                      widget.user["module"] ??
-                                      widget.user["poste"],
-                                  style: const TextStyle(
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    bottom: 450,
+                    bottom: 430,
                   ),
                   child: Center(
                     child: GestureDetector(

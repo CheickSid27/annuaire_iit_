@@ -1,5 +1,5 @@
-name: annuaire_iit_
-description: A new Flutter project.
+name: Udirectory
+description: FOR IIT MEMBERS.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
@@ -20,6 +20,7 @@ dependencies:
   flutter_form_builder: ^8.0.0
   flutter_typeahead: ^4.6.1
   modal_bottom_sheet: ^1.0.0
+  flutter_spinkit: ^5.2.0
 
 dev_dependencies:
   flutter_test:

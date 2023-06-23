@@ -1,5 +1,5 @@
-import 'package:annuaire_iit_/model/parse_handler.dart';
-import 'package:annuaire_iit_/views/Search_View.dart';
+import 'package:Udirectory/model/parse_handler.dart';
+import 'package:Udirectory/views/Search_View.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:swipable_stack/swipable_stack.dart';
@@ -97,7 +97,10 @@ class MatchState extends State<home_view> {
                                                     ),
 
                                                     // Text(
-                                                    //   users.emailAddress ?? "",
+                                                    //   widget.users[
+                                                    //               'emailAddress']
+                                                    //           as String? ??
+                                                    //       "",
                                                     //   style: TextStyle(
                                                     //     fontSize: 25,
                                                     //     fontWeight:
@@ -306,91 +309,61 @@ class MatchState extends State<home_view> {
                     Text(
                       '${user.username}',
                       style: const TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.w900),
+                        fontSize: 25,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                    child: Text(
-                      'Mon Cursus',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(253, 126, 20, 0.839),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const Divider(
-                height: 2,
-                indent: 10,
-                endIndent: 40,
-                color: Color.fromRGBO(253, 126, 20, 0.839),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 140,
-                width: 140,
-                child: GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      // useSafeArea: true,
-                      barrierColor: Colors.black,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dismissible(
-                          key: const Key('dialogKey'),
-                          direction: DismissDirection.down,
-                          onDismissed: (direction) {
-                            Navigator.of(context).pop();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 50, bottom: 50),
-                            child: InteractiveViewer(
-                              boundaryMargin: const EdgeInsets.all(0.0),
-                              minScale: 0.5,
-                              maxScale: 4.0,
-                              child: SizedBox(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(45),
-                                  child: (ParseHandler()
-                                              .getImageForUser(user) ==
-                                          null)
-                                      ? Image.asset(
-                                          "assets/UserNoProfilPic.png")
-                                      : Image.network(
-                                          ParseHandler().getImageForUser(user)!,
-                                        ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    barrierColor: Colors.black,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dismissible(
+                        key: const Key('dialogKey'),
+                        direction: DismissDirection.down,
+                        onDismissed: (direction) {
+                          Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 50, bottom: 50),
+                          child: InteractiveViewer(
+                            boundaryMargin: const EdgeInsets.all(0.0),
+                            minScale: 0.5,
+                            maxScale: 4.0,
+                            child: SizedBox(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(45),
+                                child: Image.network(
+                                  ParseHandler().getImageForUser(user) ??
+                                      "assets/UserNoProfilPic.png",
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: SizedBox(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(75),
-                      child: (ParseHandler().getImageForUser(user) == null)
-                          ? Image.asset("assets/UserNoProfilPic.png")
-                          : Image.network(ParseHandler().getImageForUser(user)!,
-                              fit: BoxFit.cover),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: SizedBox(
+                  height: 140,
+                  width: 140,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(75),
+                    child: Image.network(
+                      ParseHandler().getImageForUser(user) ??
+                          "assets/UserNoProfilPic.png",
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -411,8 +384,6 @@ class MatchState extends State<home_view> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  if (user["annee"] == null || user["annee"].toString().isEmpty)
-                    Container(height: 0),
                 ],
               ),
               const SizedBox(height: 5),
@@ -422,9 +393,10 @@ class MatchState extends State<home_view> {
                     user["filiere"] as String? ??
                     '',
                 style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.italic),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               const SizedBox(height: 40),
               Column(
@@ -442,7 +414,7 @@ class MatchState extends State<home_view> {
                             color: Color.fromRGBO(253, 126, 20, 0.839),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const Divider(
@@ -451,50 +423,45 @@ class MatchState extends State<home_view> {
                     endIndent: 40,
                     color: Color.fromRGBO(253, 126, 20, 0.839),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              user.emailAddress ?? 'Email',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Text(
-                                user["numero"] as String? ?? "",
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          user.emailAddress ?? 'Email',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      )
-                    ],
+                        const SizedBox(height: 20),
+                        Text(
+                          user["numero"] as String? ?? "",
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(left: 15, top: 0, bottom: 10),
                     child: Text(
-                      'A propros de moi',
+                      'A propos de moi',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: Color.fromRGBO(253, 126, 20, 0.839),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               const Divider(

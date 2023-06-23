@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:annuaire_iit_/model/parse_handler.dart';
+import 'package:Udirectory/model/parse_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -16,17 +16,17 @@ class ProfileEditView extends StatefulWidget {
 class ProfileState extends State<ProfileEditView> {
   late TextEditingController usernameController;
   late TextEditingController descriptionController;
-  late TextEditingController mailController;
   late TextEditingController telController;
   ImagePicker imagePicker = ImagePicker();
   String? url;
+  bool isTextFieldSelectedUsername = false;
+  bool isTextFieldSelectednumero = false;
+  bool isTextFieldSelecteddescrip = false;
 
   @override
   void initState() {
     usernameController = TextEditingController();
     descriptionController = TextEditingController();
-    mailController = TextEditingController();
-    mailController = TextEditingController();
     telController = TextEditingController();
 
     super.initState();
@@ -36,7 +36,6 @@ class ProfileState extends State<ProfileEditView> {
   void dispose() {
     usernameController.dispose();
     descriptionController.dispose();
-    mailController.dispose();
     telController.dispose();
     super.dispose();
   }
@@ -69,78 +68,84 @@ class ProfileState extends State<ProfileEditView> {
                       child: Text("Appareil photo")),
                 ],
               ),
-              Row(
+              Column(
                 children: [
-                  Expanded(
-                      child: TextField(
+                  TextField(
+                    onTap: () {
+                      setState(() {
+                        isTextFieldSelectedUsername = true;
+                      });
+                    },
                     controller: usernameController,
                     decoration: InputDecoration(hintText: widget.user.username),
-                  )),
-                  IconButton(
-                      onPressed: (() => updateUser(
+                  ),
+                  if (isTextFieldSelectedUsername)
+                    ElevatedButton(
+                      onPressed: () {
+                        updateUser(
                           key: "username",
-                          value: usernameController.text.trim())),
-                      icon: const Icon(Icons.send))
+                          value: usernameController.text.trim(),
+                        );
+                        setState(() {
+                          isTextFieldSelectedUsername = false;
+                        });
+                      },
+                      child: Text('Modifier'),
+                    ),
                 ],
               ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //         child: TextField(
-              //       controller: mailController,
-              //       decoration:
-              //           InputDecoration(hintText: widget.user.emailAddress),
-              //     )),
-              //     IconButton(
-              //         onPressed: (() => updateUser(
-              //             key: "email", value: mailController.text.trim())),
-              //         icon: const Icon(Icons.send))
-              //   ],
-              // ),
-              Row(
+              Column(
                 children: [
-                  Expanded(
-                      child: TextField(
-                    controller: mailController,
-                    decoration: InputDecoration(hintText: widget.user["email"]),
-                    maxLines: null,
-                  )),
-                  IconButton(
-                      onPressed: (() => updateUser(
-                          key: "email", value: mailController.text.trim())),
-                      icon: const Icon(Icons.send))
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: TextField(
+                  TextField(
+                    onTap: () {
+                      setState(() {
+                        isTextFieldSelectednumero = true;
+                      });
+                    },
                     controller: telController,
                     decoration:
                         InputDecoration(hintText: widget.user["numero"]),
                     maxLines: null,
-                  )),
-                  IconButton(
-                      onPressed: (() => updateUser(
-                          key: "numero", value: telController.text.trim())),
-                      icon: const Icon(Icons.send))
+                  ),
+                  if (isTextFieldSelectednumero)
+                    ElevatedButton(
+                      onPressed: () {
+                        updateUser(
+                            key: "numero", value: telController.text.trim());
+                        setState(() {
+                          isTextFieldSelectednumero = false;
+                        });
+                      },
+                      child: Text('Modifier'),
+                    ),
                 ],
               ),
-              Row(
+              Column(
                 children: [
-                  Expanded(
-                      child: TextField(
+                  TextField(
+                    onTap: () {
+                      setState(() {
+                        isTextFieldSelecteddescrip = true;
+                      });
+                    },
                     controller: descriptionController,
-                    decoration: InputDecoration(
-                        hintText: widget.user["description"] ??
-                            'Ce que les autres doivent savoir sur vous'),
+                    decoration:
+                        InputDecoration(hintText: widget.user["description"]),
                     maxLines: null,
-                  )),
-                  IconButton(
-                      onPressed: (() => updateUser(
+                  ),
+                  if (isTextFieldSelecteddescrip)
+                    ElevatedButton(
+                      onPressed: () {
+                        updateUser(
                           key: "description",
-                          value: descriptionController.text.trim())),
-                      icon: const Icon(Icons.send))
+                          value: descriptionController.text.trim(),
+                        );
+                        setState(() {
+                          isTextFieldSelecteddescrip = false;
+                        });
+                      },
+                      child: Text('Modifier'),
+                    ),
                 ],
               ),
             ],

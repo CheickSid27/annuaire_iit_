@@ -1,5 +1,5 @@
-import 'package:annuaire_iit_/model/login_response.dart';
-import 'package:annuaire_iit_/model/parse_handler.dart';
+import 'package:Udirectory/model/login_response.dart';
+import 'package:Udirectory/model/parse_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -76,9 +76,13 @@ class AuthState extends State<AuthController> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Image.asset(
-                  "assets/iit-logo.png",
-                  height: MediaQuery.of(context).size.height / 5,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 15, bottom: 25),
+                  child: Image.asset(
+                    "assets/iit lgop.jpg",
+                    height: MediaQuery.of(context).size.height / 5,
+                  ),
                 ),
                 Expanded(
                   child: Container(
@@ -119,7 +123,7 @@ class AuthState extends State<AuthController> {
                                     right: 25,
                                   ),
                                   child: myTextField(usernameController,
-                                      "Nom complet", false, true, false),
+                                      "Nom complet", false, true, false, false),
                                 )
                               : Container(),
                           Padding(
@@ -133,7 +137,8 @@ class AuthState extends State<AuthController> {
                                 "Adresse mail Institutionnelle",
                                 false,
                                 false,
-                                false),
+                                false,
+                                true),
                           ),
                           (authType == 1)
                               ? Padding(
@@ -143,7 +148,7 @@ class AuthState extends State<AuthController> {
                                     right: 25,
                                   ),
                                   child: myTextField(telController, "numero",
-                                      false, false, true),
+                                      false, false, true, false),
                                 )
                               : Container(),
                           Padding(
@@ -153,7 +158,7 @@ class AuthState extends State<AuthController> {
                               right: 25,
                             ),
                             child: myTextField(passwordController,
-                                "Mot de passe", true, false, false),
+                                "Mot de passe", true, false, false, false),
                           ),
                           SizedBox(height: 10),
                           (authType == 1)
@@ -183,34 +188,63 @@ class AuthState extends State<AuthController> {
                                                         CrossAxisAlignment
                                                             .stretch,
                                                     children: [
-                                                      TextField(
-                                                        controller:
-                                                            mailController,
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .emailAddress,
-                                                        textCapitalization:
-                                                            TextCapitalization
-                                                                .none,
-                                                        autocorrect: false,
-                                                        decoration: InputDecoration(
-                                                            border: OutlineInputBorder(
-                                                                borderSide: BorderSide(
-                                                                    color: Colors
-                                                                        .black)),
-                                                            labelText:
-                                                                'E-mail'),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(15.0),
+                                                        child: TextField(
+                                                          controller:
+                                                              mailController,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .emailAddress,
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .none,
+                                                          autocorrect: false,
+                                                          decoration: InputDecoration(
+                                                              border: OutlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: Colors
+                                                                          .black)),
+                                                              labelText:
+                                                                  'E-mail'),
+                                                        ),
                                                       ),
                                                       SizedBox(
                                                         height: 8,
                                                       ),
-                                                      Container(
-                                                        height: 50,
-                                                        child: ElevatedButton(
-                                                          child: const Text(
-                                                              'Reset Password'),
-                                                          onPressed: () =>
-                                                              doUserResetPassword(),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          top: 12,
+                                                          left: 45,
+                                                          right: 45,
+                                                        ),
+                                                        child: Container(
+                                                          height: 50,
+                                                          child: ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              primary: Color
+                                                                  .fromRGBO(
+                                                                      253,
+                                                                      126,
+                                                                      20,
+                                                                      0.839),
+                                                            ),
+                                                            child: const Text(
+                                                              'Réinitialiser le mot de passe',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800),
+                                                            ),
+                                                            onPressed: () =>
+                                                                doUserResetPassword(),
+                                                          ),
                                                         ),
                                                       )
                                                     ],
@@ -254,7 +288,8 @@ class AuthState extends State<AuthController> {
                                           label: Text('License 1'),
                                           selected:
                                               selectedAnnee == 'License 1',
-                                          selectedColor: Colors.blue,
+                                          selectedColor: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -267,7 +302,8 @@ class AuthState extends State<AuthController> {
                                           label: Text('License 2'),
                                           selected:
                                               selectedAnnee == 'License 2',
-                                          selectedColor: Colors.blue,
+                                          selectedColor: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -280,7 +316,8 @@ class AuthState extends State<AuthController> {
                                           label: Text('License 3'),
                                           selected:
                                               selectedAnnee == 'License 3',
-                                          selectedColor: Colors.blue,
+                                          selectedColor: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -292,7 +329,8 @@ class AuthState extends State<AuthController> {
                                         ChoiceChip(
                                           label: Text('Master 1'),
                                           selected: selectedAnnee == 'Master 1',
-                                          selectedColor: Colors.blue,
+                                          selectedColor:
+                                              Color.fromARGB(185, 253, 125, 20),
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -304,7 +342,8 @@ class AuthState extends State<AuthController> {
                                         ChoiceChip(
                                           label: Text('Master 2'),
                                           selected: selectedAnnee == 'Master 2',
-                                          selectedColor: Colors.blue,
+                                          selectedColor: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
                                           onSelected: (bool selected) {
                                             setState(() {
                                               selectedAnnee =
@@ -457,8 +496,9 @@ class AuthState extends State<AuthController> {
     );
   }
 
+  final emailFormat = RegExp(r'^[^\s@]+@iit\.ci$');
   Widget myTextField(TextEditingController controller, String hint,
-      bool isPassword, bool isUsername, bool isnumero) {
+      bool isPassword, bool isUsername, bool isnumero, isEmail) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -477,43 +517,6 @@ class AuthState extends State<AuthController> {
           isUsername ? TextCapitalization.words : TextCapitalization.none,
       keyboardType: isnumero ? TextInputType.phone : TextInputType.text,
     );
-  }
-
-  handleAuth() async {
-    setState(() {
-      isLoading = true; // Activer l'indicateur de chargement
-    });
-    FocusScope.of(context).requestFocus(FocusNode());
-    final username = usernameController.text;
-    final emailAddress = mailController.text.trim();
-    final numero = telController.text.trim();
-    final password = passwordController.text.trim();
-    if (authType == 1) {
-      final loginResponse = await ParseHandler().createUser(
-        username: username,
-        emailAddress: emailAddress,
-        numero: numero,
-        password: password,
-        role: selectedRole,
-        filiere: selectedFilliere,
-        module: selectedModule,
-        poste: selectedPoste,
-        annee: selectedAnnee,
-      );
-      handleAuthResponse(loginResponse);
-    } else {
-      final loginResponse = await ParseHandler().signIn(
-        emailAddress: emailAddress,
-        password: password,
-      );
-      handleAuthResponse(loginResponse);
-    }
-
-    await Future.delayed(Duration(seconds: 2));
-
-    setState(() {
-      isLoading = false; // Désactiver l'indicateur de chargement
-    });
   }
 
   void doUserResetPassword() async {
@@ -560,6 +563,74 @@ class AuthState extends State<AuthController> {
     }
   }
 
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@iit\.ci$');
+    return emailRegex.hasMatch(email);
+  }
+
+  handleAuth() async {
+    setState(() {
+      isLoading = true; // Activer l'indicateur de chargement
+    });
+    FocusScope.of(context).requestFocus(FocusNode());
+    final username = usernameController.text;
+    final emailAddress = mailController.text.trim();
+    final numero = telController.text.trim();
+    final password = passwordController.text.trim();
+    if (!isValidEmail(emailAddress)) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text(
+              'Erreur',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            content: Text('Veuillez saisir une adresse e-mail valide.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+
+      setState(() {
+        isLoading = false; // Désactiver l'indicateur de chargement
+      });
+    }
+    if (authType == 1) {
+      final loginResponse = await ParseHandler().createUser(
+        username: username,
+        emailAddress: emailAddress,
+        numero: numero,
+        password: password,
+        role: selectedRole,
+        filiere: selectedFilliere,
+        module: selectedModule,
+        poste: selectedPoste,
+        annee: selectedAnnee,
+      );
+      handleAuthResponse(loginResponse);
+    } else {
+      final loginResponse = await ParseHandler().signIn(
+        emailAddress: emailAddress,
+        password: password,
+      );
+      handleAuthResponse(loginResponse);
+    }
+
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      isLoading = false; // Désactiver l'indicateur de chargement
+    });
+  }
+
   handleAuthResponse(LoginResponse loginResponse) {
     if (loginResponse.result == true) {
       //On goBack
@@ -573,7 +644,7 @@ class AuthState extends State<AuthController> {
               'Erreur',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            content: Text(loginResponse.error!),
+            content: Text('Veuillez vérifier vos informations et réessayer.'),
             actions: <Widget>[
               TextButton(
                 child: const Text('OK'),
