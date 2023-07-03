@@ -80,7 +80,7 @@ class MatchState extends State<home_view> {
                                             },
                                             child: Container(
                                               margin: const EdgeInsets.only(
-                                                  left: 125, top: 25),
+                                                  left: 80, top: 1),
                                               child: ListTile(
                                                 title: Column(
                                                   crossAxisAlignment:
@@ -153,20 +153,22 @@ class MatchState extends State<home_view> {
                                                       Container(height: 0),
 
                                                     const SizedBox(height: 5),
-                                                    Text(
-                                                      users["module"]
-                                                              as String? ??
-                                                          users["poste"]
-                                                              as String? ??
-                                                          users["filiere"]
-                                                              as String? ??
-                                                          '',
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontStyle:
-                                                              FontStyle.italic),
+                                                    Flexible(
+                                                      child: Text(
+                                                        users["module"]
+                                                                as String? ??
+                                                            users["poste"]
+                                                                as String? ??
+                                                            users["filiere"]
+                                                                as String? ??
+                                                            '',
+                                                        style: const TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontStyle: FontStyle
+                                                                .italic),
+                                                      ),
                                                     ),
                                                   ],
                                                 ), // Ajoutez d'autres informations utilisateur que vous souhaitez afficher
@@ -177,15 +179,16 @@ class MatchState extends State<home_view> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            top: 63, left: 45),
+                                            top: 63, left: 35),
                                         child: SizedBox(
-                                          height: 90,
-                                          width: 90,
+                                          height: 80,
+                                          width: 80,
                                           child: GestureDetector(
                                             onTap: () {
                                               showDialog(
                                                 // useSafeArea: true,
-                                                barrierColor: Colors.black,
+                                                barrierColor: Color.fromARGB(
+                                                    207, 0, 0, 0),
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) {
@@ -218,8 +221,18 @@ class MatchState extends State<home_view> {
                                                                         .getImageForUser(
                                                                             users) ==
                                                                     null)
-                                                                ? Image.asset(
-                                                                    "assets/UserNoProfilPic.png")
+                                                                ? Center(
+                                                                    child: Text(
+                                                                      'Pas de photo de profil',
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              20,
+                                                                          fontWeight:
+                                                                              FontWeight.w800),
+                                                                    ),
+                                                                  )
                                                                 : Image.network(
                                                                     ParseHandler()
                                                                         .getImageForUser(
@@ -306,11 +319,13 @@ class MatchState extends State<home_view> {
                 padding: const EdgeInsets.all(20),
                 child: Row(
                   children: [
-                    Text(
-                      '${user.username}',
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w900,
+                    Flexible(
+                      child: Text(
+                        '${user.username}',
+                        style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                   ],
@@ -320,7 +335,7 @@ class MatchState extends State<home_view> {
               GestureDetector(
                 onTap: () {
                   showDialog(
-                    barrierColor: Colors.black,
+                    barrierColor: Color.fromARGB(211, 0, 0, 0),
                     context: context,
                     builder: (BuildContext context) {
                       return Dismissible(
@@ -338,10 +353,20 @@ class MatchState extends State<home_view> {
                             child: SizedBox(
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(45),
-                                child: Image.network(
-                                  ParseHandler().getImageForUser(user) ??
-                                      "assets/UserNoProfilPic.png",
-                                ),
+                                child: (ParseHandler().getImageForUser(user) ==
+                                        null)
+                                    ? Center(
+                                        child: Text(
+                                          'Pas de photo de profil',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800),
+                                        ),
+                                      )
+                                    : Image.network(
+                                        ParseHandler().getImageForUser(user)!,
+                                        fit: BoxFit.cover),
                               ),
                             ),
                           ),
@@ -355,11 +380,10 @@ class MatchState extends State<home_view> {
                   width: 140,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(75),
-                    child: Image.network(
-                      ParseHandler().getImageForUser(user) ??
-                          "assets/UserNoProfilPic.png",
-                      fit: BoxFit.cover,
-                    ),
+                    child: (ParseHandler().getImageForUser(user) == null)
+                        ? Image.asset("assets/UserNoProfilPic.png")
+                        : Image.network(ParseHandler().getImageForUser(user)!,
+                            fit: BoxFit.cover),
                   ),
                 ),
               ),
@@ -407,7 +431,7 @@ class MatchState extends State<home_view> {
                       const Padding(
                         padding: EdgeInsets.only(left: 15, top: 0, bottom: 10),
                         child: Text(
-                          'Contact',
+                          'Contacts',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -427,20 +451,36 @@ class MatchState extends State<home_view> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        Text(
-                          user.emailAddress ?? 'Email',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.mail_outline_outlined,
+                              color: Color.fromRGBO(253, 126, 20, 0.839),
+                            ),
+                            Text(
+                              user.emailAddress ?? 'zie-junior.traore@iit.ci',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 20),
-                        Text(
-                          user["numero"] as String? ?? "",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.call,
+                              color: Color.fromRGBO(253, 126, 20, 0.839),
+                            ),
+                            Text(
+                              user["numero"] as String? ?? "",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -448,27 +488,41 @@ class MatchState extends State<home_view> {
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15, top: 0, bottom: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 15, top: 0, bottom: 10),
+                        child: Text(
+                          'A propos de moi',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(253, 126, 20, 0.839),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    height: 2,
+                    indent: 10,
+                    endIndent: 40,
+                    color: Color.fromRGBO(253, 126, 20, 0.839),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      'A propos de moi',
-                      style: TextStyle(
+                      user["description"] as String? ?? "",
+                      style: const TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(253, 126, 20, 0.839),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ],
-              ),
-              const Divider(
-                height: 2,
-                indent: 10,
-                endIndent: 40,
-                color: Color.fromRGBO(253, 126, 20, 0.839),
               ),
 
               // Ajoutez d'autres informations que vous souhaitez afficher

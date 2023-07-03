@@ -262,11 +262,13 @@ class AuthState extends State<AuthController> {
                                     SizedBox(
                                       width: 27,
                                     ),
-                                    Text(
-                                      'Année de cursus: (Uniquement pour les étudiants)',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                    Flexible(
+                                      child: Text(
+                                        'Année de cursus: (Uniquement pour les étudiants)',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
+                                        ),
                                       ),
                                     ),
                                   ],

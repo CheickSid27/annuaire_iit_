@@ -13,7 +13,7 @@ void main() async {
     Keys.serverID,
     clientKey: Keys.clientID,
     autoSendSessionId: true,
-    liveQueryUrl: "https://annuaire.b4a.io",
+    liveQueryUrl: "https://udirectory.b4a.io",
   );
 
   runApp(const MyApp());
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'U-Directory',
       theme: ThemeData(
         primarySwatch: materialColor,
         colorScheme: ThemeData().colorScheme.copyWith(

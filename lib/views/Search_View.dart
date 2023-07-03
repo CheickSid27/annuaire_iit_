@@ -54,14 +54,27 @@ class _User_Search_ViewState extends State<User_Search_View> {
                       ParseObject user = searchResults[index];
                       String username = user['username'] ?? '';
 
-                      return ElevatedButton(
-                        onPressed: () {
-                          onUserSelected(user as ParseUser);
-                        },
-                        child: ListTile(
-                          title: Text(username),
-                          // Autres informations de l'utilisateur si nécessaire
-                        ),
+                      return Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: ElevatedButton(
+                              style: ButtonStyle(),
+                              onPressed: () {
+                                onUserSelected(user as ParseUser);
+                              },
+                              child: ListTile(
+                                title: Flexible(
+                                  child: Text(
+                                    username,
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                ),
+                                // Autres informations de l'utilisateur si nécessaire
+                              ),
+                            ),
+                          ),
+                        ],
                       );
                     },
                   );

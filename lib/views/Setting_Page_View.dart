@@ -33,7 +33,7 @@ class _SettingViewState extends State<SettingView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Setting'),
+        title: const Text('Paramètre'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -62,26 +62,38 @@ class _SettingViewState extends State<SettingView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              TextField(
-                                controller: mailController,
-                                keyboardType: TextInputType.emailAddress,
-                                textCapitalization: TextCapitalization.none,
-                                autocorrect: false,
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.black)),
-                                    labelText: 'E-mail'),
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: TextField(
+                                  controller: mailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  textCapitalization: TextCapitalization.none,
+                                  autocorrect: false,
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.black)),
+                                      labelText: 'E-mail'),
+                                ),
                               ),
                               SizedBox(
                                 height: 8,
                               ),
                               Container(
                                 height: 50,
-                                child: ElevatedButton(
-                                  child: const Text('Reinitialisé MDP'),
-                                  onPressed: () => doUserResetPassword(),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20.0, right: 20),
+                                  child: ElevatedButton(
+                                    child: const Text('Reinitialisé MDP'),
+                                    onPressed: () => doUserResetPassword(),
+                                  ),
                                 ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(21.0),
+                                child: Text(
+                                    'Vous allez reçevoir un mail de reinitialisation pour votre mot de passe'),
                               )
                             ],
                           ),
@@ -90,7 +102,7 @@ class _SettingViewState extends State<SettingView> {
                 },
                 child: Row(
                   children: const [
-                    Icon(Icons.edit_sharp),
+                    Icon(Icons.edit),
                     Text('Reinitialisé mon mot de passe'),
                   ],
                 )),

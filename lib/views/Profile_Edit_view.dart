@@ -53,9 +53,24 @@ class ProfileState extends State<ProfileEditView> {
           child: Column(
             children: [
               Container(
-                  height: MediaQuery.of(context).size.height / 2,
-                  child:
-                      (url == null) ? Icon(Icons.person) : Image.network(url!)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color.fromARGB(62, 158, 158, 158),
+                            blurRadius: 10,
+                            spreadRadius: 5)
+                      ]),
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: (url == null)
+                      ? Center(
+                          child: Text(
+                            'Ajouter une photo de profil',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                        )
+                      : Image.network(url!)),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -77,7 +92,10 @@ class ProfileState extends State<ProfileEditView> {
                       });
                     },
                     controller: usernameController,
-                    decoration: InputDecoration(hintText: widget.user.username),
+                    decoration: InputDecoration(
+                        hintText: widget.user.username,
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black)),
                   ),
                   if (isTextFieldSelectedUsername)
                     ElevatedButton(
@@ -103,8 +121,10 @@ class ProfileState extends State<ProfileEditView> {
                       });
                     },
                     controller: telController,
-                    decoration:
-                        InputDecoration(hintText: widget.user["numero"]),
+                    decoration: InputDecoration(
+                        hintText: widget.user["numero"],
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black)),
                     maxLines: null,
                   ),
                   if (isTextFieldSelectednumero)
@@ -129,8 +149,10 @@ class ProfileState extends State<ProfileEditView> {
                       });
                     },
                     controller: descriptionController,
-                    decoration:
-                        InputDecoration(hintText: widget.user["description"]),
+                    decoration: InputDecoration(
+                        hintText: widget.user["description"],
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black)),
                     maxLines: null,
                   ),
                   if (isTextFieldSelecteddescrip)
@@ -148,6 +170,11 @@ class ProfileState extends State<ProfileEditView> {
                     ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                    "Oublliez pas de cliquer sur le bouton 'modifier' pour enregistrer vos modification"),
+              )
             ],
           ),
         ),

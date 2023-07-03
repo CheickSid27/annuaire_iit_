@@ -61,9 +61,9 @@ class ProfileState extends State<ProfileView> {
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 100),
+                  padding: const EdgeInsets.only(top: 60),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.65,
+                    height: MediaQuery.of(context).size.height * 0.70,
                     width: MediaQuery.of(context).size.width * 80,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(40)),
@@ -103,182 +103,183 @@ class ProfileState extends State<ProfileView> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              left: 20.0, right: 20, top: 10),
-                          child: SingleChildScrollView(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20),
-                                  child: Text(
-                                    widget.user.username ?? '',
-                                    style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                              left: 20.0, right: 20, top: 0),
+                          child: Column(
+                            children: [
+                              Text(
+                                widget.user.username ?? '',
+                                style: const TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                              ),
+                              SingleChildScrollView(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                child: Column(
                                   children: [
-                                    Flexible(
-                                      child: Text(
-                                        widget.user.emailAddress ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            widget.user.emailAddress ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.mail_outline_outlined,
+                                          color: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(22.0),
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 1,
+                                        child: Container(
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.mail_outline_outlined,
-                                      color:
-                                          Color.fromRGBO(253, 126, 20, 0.839),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            widget.user["numero"],
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.phone_outlined,
+                                          color: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(22.0),
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 1,
+                                        child: Container(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            widget.user['role'] ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        if (widget.user["annee"] != null &&
+                                            widget.user["annee"]
+                                                .toString()
+                                                .isNotEmpty)
+                                          Text(
+                                            widget.user["annee"] as String,
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        if (widget.user["annee"] == null ||
+                                            widget.user["annee"]
+                                                .toString()
+                                                .isEmpty)
+                                          Container(height: 0),
+                                        Icon(
+                                          Icons.school_outlined,
+                                          color: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(22.0),
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 1,
+                                        child: Container(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            widget.user["filiere"] ??
+                                                widget.user["module"] ??
+                                                widget.user["poste"],
+                                            style: const TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.history_edu_outlined,
+                                          color: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(22.0),
+                                      child: SizedBox(
+                                        width: 100,
+                                        height: 1,
+                                        child: Container(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            widget.user["description"] ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.edit_note_outlined,
+                                          color: Color.fromRGBO(
+                                              253, 126, 20, 0.839),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(22.0),
-                                  child: SizedBox(
-                                    width: 100,
-                                    height: 1,
-                                    child: Container(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        widget.user["numero"],
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.phone_outlined,
-                                      color:
-                                          Color.fromRGBO(253, 126, 20, 0.839),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(22.0),
-                                  child: SizedBox(
-                                    width: 100,
-                                    height: 1,
-                                    child: Container(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        widget.user['role'] ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    if (widget.user["annee"] != null &&
-                                        widget.user["annee"]
-                                            .toString()
-                                            .isNotEmpty)
-                                      Text(
-                                        widget.user["annee"] as String,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    if (widget.user["annee"] == null ||
-                                        widget.user["annee"].toString().isEmpty)
-                                      Container(height: 0),
-                                    Icon(
-                                      Icons.school_outlined,
-                                      color:
-                                          Color.fromRGBO(253, 126, 20, 0.839),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(22.0),
-                                  child: SizedBox(
-                                    width: 100,
-                                    height: 1,
-                                    child: Container(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        widget.user["filiere"] ??
-                                            widget.user["module"] ??
-                                            widget.user["poste"],
-                                        style: const TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.history_edu_outlined,
-                                      color:
-                                          Color.fromRGBO(253, 126, 20, 0.839),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(22.0),
-                                  child: SizedBox(
-                                    width: 100,
-                                    height: 1,
-                                    child: Container(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        widget.user["description"] ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.edit_note_outlined,
-                                      color:
-                                          Color.fromRGBO(253, 126, 20, 0.839),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -287,7 +288,7 @@ class ProfileState extends State<ProfileView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    bottom: 430,
+                    bottom: 460,
                   ),
                   child: Center(
                     child: GestureDetector(
@@ -303,8 +304,13 @@ class ProfileState extends State<ProfileView> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(180),
                                   child: (url == null)
-                                      ? Image.asset(
-                                          "assets/UserNoProfilPic.png")
+                                      ? Center(
+                                          child: Text(
+                                            'Pas de photo de profil',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        )
                                       : Image.network(url!, fit: BoxFit.cover),
                                 ),
                               ),

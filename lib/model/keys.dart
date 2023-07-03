@@ -1,5 +1,6 @@
 class Keys {
-  static const String applicationID = "0lXsvX2kce1FpBWnOEQOUkRXm5FjK25ZAROJoNsK";
-  static const String clientID = "Sz6YB5BW29GzwVyFonl5C6jk10cyqIAQM1m3XlJY";
+  static const String applicationID =
+      "1UE9vnnoAxZ4TMVLkrdpfksBqzKHzbT7UmBnutXS";
+  static const String clientID = "mDRiHclkBWwQvFRagvhoyaxklF4CeLyQwordRTIH";
   static const String serverID = "https://parseapi.back4app.com";
 }
