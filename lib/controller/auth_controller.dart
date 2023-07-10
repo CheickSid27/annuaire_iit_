@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class AuthController extends StatefulWidget {
-  const AuthController({super.key});
+  const AuthController();
+  //AuthController({super.key});
 
   @override
   AuthState createState() => AuthState();
